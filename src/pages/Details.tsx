@@ -1,7 +1,7 @@
 import {
     IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle,
     IonContent,
-    IonHeader,
+    IonHeader, IonImg,
     IonPage, IonThumbnail,
     IonTitle,
     IonToolbar
@@ -65,9 +65,7 @@ class Home extends Component {
                 </IonHeader>
                 <IonContent fullscreen>
                     <IonCard>
-                        <IonThumbnail item-left slot="start">
-                            <img src= {this.state.movie.Poster} />
-                        </IonThumbnail>
+                        <IonImg style={{width: '200px', height: '350px'}} src={this.state.movie.Poster} />
                         <IonCardHeader>
                             <IonCardTitle>{this.state.movie.Director} - {this.state.movie.Year}</IonCardTitle>
                             <IonCardSubtitle>{this.state.movie.Actors}</IonCardSubtitle>
