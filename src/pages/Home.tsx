@@ -1,26 +1,58 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import React from 'react';
+import {
+    IonAvatar,
+    IonContent,
+    IonHeader,
+    IonItem, IonLabel,
+    IonList,
+    IonListHeader,
+    IonPage,
+    IonTitle,
+    IonToolbar
+} from '@ionic/react';
+import React, {Component} from 'react';
+import axios from 'axios';
 
-const Home: React.FC = () => {
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Ionic Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent className="ion-padding">
-        The world is your oyster.
-        <p>
-          If you get lost, the{' '}
-          <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/">
-            docs
-          </a>{' '}
-          will be your guide.
-        </p>
-      </IonContent>
-    </IonPage>
-  );
+class Home extends Component {
+    API_URL = 'http://www.omdbapi.com?s=Star*&apikey=a352f93';
+    state = {
+        movies : []
+    };
+
+    componentDidMount(): void {
+        axios.get(this.API_URL).then((response) => {
+            this.setState({movies: response.data.Search})
+        })
+    }
+
+    render() {
+        return (
+            <IonPage>
+                <IonHeader>
+                    <IonToolbar>
+                        <IonTitle>Listado películas</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonContent className="ion-padding">
+                    <IonList>
+                        <IonListHeader>
+                            Películas que contienen Star
+                        </IonListHeader>
+                        {this.state.movies.map((item: any) => (
+                            <IonItem>
+                                <IonAvatar slot="start">
+                                    <img alt="" src={item.Poster}/>
+                                </IonAvatar>
+                                <IonLabel>
+                                    <h2>{item.Title}</h2>
+                                    <h3>{item.Year}</h3>
+                                </IonLabel>
+                            </IonItem>
+                            ))}
+                    </IonList>
+                </IonContent>
+            </IonPage>
+        );
+    }
 };
 
 export default Home;
