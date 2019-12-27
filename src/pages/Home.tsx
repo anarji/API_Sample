@@ -13,10 +13,16 @@ import React, {Component} from 'react';
 import axios from 'axios';
 
 class Home extends Component {
-    API_URL = 'http://www.omdbapi.com?s=Star*&apikey=a352f93';
+    API_KEY = "apikey=a352f93";
+    API_URL_HOST = 'http://www.omdbapi.com';
+    API_URL = this.API_URL_HOST + '?s=Star&' + this.API_KEY;
     state = {
         movies : []
     };
+
+    getDetailUrl(item: any) {
+        return '/details/' + item.imdbID;
+    }
 
     componentDidMount(): void {
         axios.get(this.API_URL).then((response) => {
@@ -43,7 +49,9 @@ class Home extends Component {
                                     <img alt="" src={item.Poster}/>
                                 </IonAvatar>
                                 <IonLabel>
-                                    <h2>{item.Title}</h2>
+                                    <a href={this.getDetailUrl(item)}>
+                                        <h2>{item.Title}</h2>
+                                    </a>
                                     <h3>{item.Year}</h3>
                                 </IonLabel>
                             </IonItem>
